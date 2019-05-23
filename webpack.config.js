@@ -7,7 +7,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
     library: 'ReduxAxiosMiddleware',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
+    globalObject: "(typeof self !== 'undefined' ? self : this)"
   },
   module: {
     rules: [
@@ -16,7 +18,6 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: 'babel-loader'
       }
-     ]
+    ]
   }
 };
-
