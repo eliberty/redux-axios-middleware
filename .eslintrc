@@ -5,11 +5,6 @@
     "node": true,
     "mocha": true
   },
-  "ecmaFeatures": {
-    "destructing": true,
-    "rest":true,
-    "classes": true
-  },
   "rules": {
     "import/default": 0,
     "import/no-duplicates": 0,

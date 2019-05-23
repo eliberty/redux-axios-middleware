@@ -26,7 +26,7 @@ export const multiClientMiddleware = (clients, customMiddlewareOptions) => {
   const middlewareOptions = { ...defaultOptions, ...customMiddlewareOptions };
   const setupedClients = {};
 
-  return ({ getState, dispatch }) => next => action => {
+  return ({ getState, dispatch }) => next => (action) => {
     if (!middlewareOptions.isAxiosRequest(action)) {
       return next(action);
     }
@@ -65,15 +65,24 @@ export const multiClientMiddleware = (clients, customMiddlewareOptions) => {
     return setupedClient.client.request(requestConfig)
       .then(
         (response) => {
-          const newAction = actionOptions.onSuccess({ action, next, response, getState, dispatch }, actionOptions);
-          actionOptions.onComplete({ action: newAction, next, getState, dispatch }, actionOptions);
+          const newAction = actionOptions.onSuccess({
+            action, next, response, getState, dispatch
+          }, actionOptions);
+          actionOptions.onComplete({
+            action: newAction, next, getState, dispatch
+          }, actionOptions);
           return newAction;
         },
         (error) => {
-          const newAction = actionOptions.onError({ action, next, error, getState, dispatch }, actionOptions);
-          actionOptions.onComplete({ action: newAction, next, getState, dispatch }, actionOptions);
+          const newAction = actionOptions.onError({
+            action, next, error, getState, dispatch
+          }, actionOptions);
+          actionOptions.onComplete({
+            action: newAction, next, getState, dispatch
+          }, actionOptions);
           return actionOptions.returnRejectedPromiseOnError ? Promise.reject(newAction) : newAction;
-        });
+        }
+      );
   };
 };
 
